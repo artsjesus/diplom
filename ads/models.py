@@ -3,6 +3,7 @@ from users.models import User
 
 
 class Ads(models.Model):
+    """объявление"""
     title = models.CharField(max_length=50, verbose_name="Название")
     price = models.PositiveIntegerField(verbose_name="Цена")
     description = models.TextField(verbose_name="Описание")
@@ -19,6 +20,7 @@ class Ads(models.Model):
 
 
 class Comment(models.Model):
+    """Комментарий"""
     text = models.TextField(verbose_name="текст")
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="автор")
     ad = models.ForeignKey(Ads, on_delete=models.CASCADE, verbose_name="Объявление")

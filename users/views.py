@@ -14,13 +14,13 @@ from rest_framework import status
 
 
 class UserCreateAPIView(CreateAPIView):
+    """Создание пользователя"""
     serializer_class = UserSerializer
     queryset = User.objects.all()
     permission_classes = (AllowAny,)
 
     def perform_create(self, serializer):
         """Создаём нового пользователя, и хешируем ему пароль"""
-
         user = serializer.save(is_active=True)
         user.set_password(user.password)
         user.save()
@@ -28,7 +28,6 @@ class UserCreateAPIView(CreateAPIView):
 
 class UserUpdateAPIView(UpdateAPIView):
     """Редактирование профиля пользователя"""
-
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
@@ -37,6 +36,7 @@ User = get_user_model()
 
 
 class ResetPasswordView(APIView):
+    """Сброс пароля"""
     def post(self, request):
         email = request.data.get("email")
         try:
@@ -66,7 +66,7 @@ class ResetPasswordView(APIView):
 
 
 class ResetPasswordConfirmView(APIView):
-
+    """Подтверждение сброса пароля"""
     def post(self, request):
         uid = request.data.get("uid")
         token = request.data.get("token")
